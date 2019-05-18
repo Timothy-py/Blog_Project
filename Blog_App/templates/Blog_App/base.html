@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Blog</title>
+
+    <!-- Bootstrap -->
+      <!-- C:\Users\D SCIPHER\Documents\Web docs\Bootstrap\bootstrap.css -->
+    <!-- Javascripts -->
+      <!-- C:\Users\D SCIPHER\Documents\Web docs\Bootstrap\bootstrap.js -->
+    <!-- Medium Style Editor -->
+
+    <!-- Custom CSS -->
+      <link rel="stylesheet" href="{% static 'css/Blog_App.css' %}">
+    <!-- Fonts -->
+
+  </head>
+  <body class="loader">
+    <!-- NAVBAR -->
+    <div class="jumbotron">
+      <ul class="nav navbar-nav">
+        <li><a href="{% url 'Blog_App:post_list' %}">My blog</a></li>
+        <li><a href="{% url 'Blog_App:about' %}">About</a></li>
+        <li><a href="https://www.github.com">GitHub</a></li>
+        <li><a href="https://www.linkedin.com">Linkedin</a></li>
+      </ul>
+
+
+      {% if user.is_authenticated %}
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="{% url 'Blog_App:post_new' %}">New Post</a>
+        </li>
+        <li>
+          <a href="{% url 'Blog_App:post_draft_list' %}">Drafts</a>
+        </li>
+        <li><a href="{% url 'logout' %}">Log Out</a></li>
+        <li>
+          <a>Welcome: {{user.username}}</a>
+        </li>
+          <div class="profile_pics">
+            <img style="border-radius:50%" src="{{user.userprofile.picture.url}}" alt="profile picture">
+          </div>
+          {% else %}
+            <li> <a class="nav navbar-right"  href="{% url 'login' %}"> <span class="glyphicon glyphicon-user">Login</span> </a> </li>
+            <li> <a href="{% url 'register' %}">Sign Up</a> </li>
+      </ul>
+      {% endif %}
+    </div>
+    <!-- CONTENT BLOCK -->
+    <div class="content container">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="">
+            {{message}}
+          </div>
+        {% endfor %}
+      {% endif %}
+      <div class="row">
+        <div class="col-md-8">
+          <div class="blog_posts">
+            {% block content %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
