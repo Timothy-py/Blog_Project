@@ -2,9 +2,11 @@
 {% load crispy_forms_tags  %}
 {% block content %}
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ reg_form|crispy }}
+  <p>Select a profile picture</p>
+  {{ profile_form|crispy }}
   <input type="submit">
 </form>
 {% endblock content %}
