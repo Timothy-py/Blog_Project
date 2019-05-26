@@ -17,10 +17,11 @@ def user_registration(request):
             profile_form.save(commit=False)
             username = reg_form.cleaned_data.get('username')
             pics = profile_form.cleaned_data.get('picture')
+            def get_user(self, User):
+                userprofile = UserProfile(user=self.request.user, picture=pics)
+                userprofile.save()
+            get_user(request.user)
             messages.success(request, f'Your account has been created succesfully {username}')
-            def get_user(self):
-                self.user.userprofile.picture = pics
-                profile_form.save()
             return redirect('login')
     else:
         reg_form = user_reg_form()

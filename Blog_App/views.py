@@ -3,13 +3,15 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 from Blog_App.models import Post,Comment
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from Blog_App.forms import PostForm,CommentForm
 from django.views.generic import (TemplateView,ListView,DetailView,
                                     CreateView,UpdateView,DeleteView)
 
 ###################################
 # Class Based Views
+# Django CBV template naming convention
+# <app>/<model>_<viewtype>.html
 ###################################
 
 class AboutView(TemplateView):
@@ -17,32 +19,49 @@ class AboutView(TemplateView):
 
 class PostListView(ListView):
     model = Post
+    context_object_name = 'post_list'
     def get_queryset(self):
         return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    # ordering = ['-published_date']
 
 class PostDetailView(DetailView):
     model = Post
 
 
 
-class CreatePostView(CreateView,LoginRequiredMixin):
+class CreatePostView(LoginRequiredMixin, CreateView):
     # What's this for?
     login_url = 'login'
     redirect_field_name = 'Blog_App/post_detail.html'
     form_class = PostForm
     model = Post
 
-class PostUpdateView(UpdateView, LoginRequiredMixin):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     # login_url = '/login/'
     redirect_field_name = 'Blog_App/post_detail.html'
     form_class = PostForm
     model = Post
 
-class PostDeleteView(DeleteView, LoginRequiredMixin):
-    model = Post
-    success_url = reverse_lazy('Blog_App:post_list')
+    def test_func(self):
+        post_object = self.get_object()
+        if self.request.user == post_object.author:
+            return True
+        else:
+            return False
 
-class DraftListView(ListView,LoginRequiredMixin):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    # success_url = reverse_lazy('Blog_App:post_list')
+    success_url = '/'
+
+    def test_func(self):
+        post_object = self.get_object()
+        if self.request.user == post_object.author:
+            return True
+        else:
+            return False
+
+class DraftListView(LoginRequiredMixin,ListView):
     login_url = '/login/'
     redirect_field_name = 'Blog_App/post_list.html'
     template_name = 'Blog_App/post_draft_list.html'
