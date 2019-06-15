@@ -26,7 +26,6 @@
         <li><a href="https://www.linkedin.com">Linkedin</a></li>
       </ul>
 
-
       {% if user.is_authenticated %}
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -36,7 +35,7 @@
           <a href="{% url 'Blog_App:post_draft_list' %}">Drafts</a>
         </li>
         <li>
-          <a href="{% url 'Blog_App:profile' %}">My Profile</a>
+          <a href="{% url 'Blog_App:profile' pk=user.pk %}">My Profile</a>
         </li>
         <li><a href="{% url 'logout' %}">Log Out</a></li>
         <li>

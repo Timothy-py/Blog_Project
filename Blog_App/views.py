@@ -7,7 +7,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from Blog_App.forms import PostForm,CommentForm
 from django.views.generic import (TemplateView,ListView,DetailView,
                                     CreateView,UpdateView,DeleteView)
-
+# from django.http import HttpRequest
+# request=HttpRequest()
+from django.contrib.auth.models import User
 ###################################
 # Class Based Views
 # Django CBV template naming convention
@@ -28,9 +30,7 @@ class PostDetailView(DetailView):
     model = Post
 
 
-
 class CreatePostView(LoginRequiredMixin, CreateView):
-    # What's this for?
     login_url = 'login'
     redirect_field_name = 'Blog_App/post_detail.html'
     form_class = PostForm

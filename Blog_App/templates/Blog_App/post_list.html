@@ -1,5 +1,9 @@
 {% extends "Blog_App/base.html" %}
 {% block content %}
+{% if insert_me %}
+  <a href="{% url 'User_Registration_App:create_profile_pics' %}"></a>
+{% endif %}
+
 <div class="centerstage">
   {% for post in post_list %}
     <div class="post">

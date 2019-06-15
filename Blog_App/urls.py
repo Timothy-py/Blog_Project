@@ -18,5 +18,5 @@ urlpatterns = [
     path('comment/<int:pk>/remove', views.comment_remove, name='comment_remove'),
     path('post/<int:pk>/publish', views.post_publish, name='post_publish'),
     path('comment/<int:pk>/edit', views.CommentUpdateView.as_view(), name='comment_edit'),
-    path('profile/', user_reg_app_views.user_profile, name='profile'),
+    path('profile/<int:pk>', user_reg_app_views.user_profile, name='profile'),
 ]
