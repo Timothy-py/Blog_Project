@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator
 from django.utils import timezone
 from django.urls import reverse_lazy
 from Blog_App.models import Post,Comment
@@ -25,6 +26,8 @@ class PostListView(ListView):
     def get_queryset(self):
         return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     # ordering = ['-published_date']
+    paginate_by = 3
+
 
 class PostDetailView(DetailView):
     model = Post

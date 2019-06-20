@@ -22,8 +22,8 @@
       <ul class="nav navbar-nav">
         <li><a href="{% url 'Blog_App:post_list' %}">My blog</a></li>
         <li><a href="{% url 'Blog_App:about' %}">About</a></li>
-        <li><a href="https://www.github.com">GitHub</a></li>
-        <li><a href="https://www.linkedin.com">Linkedin</a></li>
+        <li><a target="_blank" href="https://github.com/Timothy-py/Blog_Project.git">GitHub</a></li>
+        <li><a target="_blank" href="https://www.linkedin.com">Linkedin</a></li>
       </ul>
 
       {% if user.is_authenticated %}

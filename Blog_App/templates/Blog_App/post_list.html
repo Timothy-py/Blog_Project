@@ -18,3 +18,44 @@
   {% endfor %}
 </div>
 {% endblock %}
+
+<!-- {% if is_paginated %}
+
+  {% if page_obj.has_previous %}
+    <a href="?page=1">First</a>
+    <a href="{{page_obj.previous_page_number}}">Previous</a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+      <a href="?page={{num}}">{{num}}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+      <a href="?page={{num}}">{{num}}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+    <a href="{{page_obj.next_page_number}}">Next</a>
+    <a href="{{page_obj.paginator.num_pages}}">Last</a>
+  {% endif %}
+
+{% endif %} -->
+
+{% if post_list.has_other_pages %}
+  <ul>
+    {% if post_list.has_previous %}
+      <a href="?page={{post_list.previous_page_number}}"></a>
+    {% else %}
+      <a href="?page=">previous</a>
+    {% endif %}
+
+    {% if post_list.has_next %}
+      <a href="?page={{post_list.next_page_number}}"></a>
+    {% else %}
+      <a href="?page=">next</a>
+    {% endif %}
+
+
+
+  </ul>
+{% endif %}
