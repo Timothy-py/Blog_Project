@@ -28,6 +28,15 @@ class PostListView(ListView):
     # ordering = ['-published_date']
     paginate_by = 3
 
+class UserPostListView(ListView):
+    model = Post
+    context_object_name = 'user_post_list'
+    template_name = 'user_post_list.html'
+    paginate_by = 3
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-published_date')
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -38,6 +47,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'Blog_App/post_detail.html'
     form_class = PostForm
     model = Post
+
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     # login_url = '/login/'
