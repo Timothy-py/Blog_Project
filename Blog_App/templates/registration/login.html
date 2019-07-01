@@ -1,18 +1,17 @@
 {% extends 'Blog_App/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="jumbotron">
   <h2>Please Login:</h2>
-  <h3>(Must be SuperUser, please check with the site admin)</h3>
 
   {% if form.errors %}
     <p>Your username and password didn't match! Please try again.</p>
   {% endif %}
 
   <form action="{% url 'login' %}" method="POST">{% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }} <br>
     <input type="submit" value="Login" class='btn btn-primary'>
-    <input type="hidden" name="next" value="{{next}}">
   </form>
+  <button type="button"><a href="{% url 'password-reset' %}">Forgot your password?</a></button>
 </div>
 {% endblock content %}

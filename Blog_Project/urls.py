@@ -27,7 +27,11 @@ urlpatterns = [
     # what is next_page?
     path('accounts/logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout', kwargs={'next_page':'/'}),
     path('accounts/register', user_reg_app_views.user_registration, name='register'),
-]
+    path('accounts/password-reset/', auth_views.PasswordResetView.as_view(template_name='registration/password-reset.html'), name='password-reset'),
+    path('accounts/password-reset-done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('accounts/password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view()),
+    path('accounts/password-reset-complete/', auth_views.PasswordResetCompleteView.as_view()),
+    ]
 
 if settings.DEBUG == True:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

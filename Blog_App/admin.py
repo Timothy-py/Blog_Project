@@ -2,6 +2,12 @@ from django.contrib import admin
 from Blog_App.models import Post,Comment
 
 # Register your models here.
-admin.site.register(Post)
+
+class PostAdmin(admin.ModelAdmin):
+    fields = ['title','text','author', 'image', 'create_date','published_date']
+    search_fields = ['author__User']
+
+
+admin.site.register(Post,PostAdmin)
 admin.site.register(Comment)
 # admin.site.register(Reply)

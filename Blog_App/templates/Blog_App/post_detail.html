@@ -3,6 +3,9 @@
 {% block content %}
   <hr>
   <h1 class="posttitle loader">{{post.title}}</h1>
+  {% if post.image %}
+    <img src="{{post.image.url}}" alt="PostImage">
+  {% endif %}
   {% if post.published_date %}
     <div class="date postdate">
       {{post.published_date}}

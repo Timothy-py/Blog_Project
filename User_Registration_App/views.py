@@ -6,7 +6,6 @@ from .forms import user_update_form, profile_update_form
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from django.contrib.auth.models import User
-
 # Create your views here.
 
 def user_registration(request):
