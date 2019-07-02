@@ -5,7 +5,7 @@ from Blog_App.models import Post,Comment
 
 class PostAdmin(admin.ModelAdmin):
     fields = ['title','text','author', 'image', 'create_date','published_date']
-    search_fields = ['author__User']
+    search_fields = ['author__username__icontains']
 
 
 admin.site.register(Post,PostAdmin)
