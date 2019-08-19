@@ -3,16 +3,18 @@ from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
 from Blog_Project import settings
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     text = models.TextField()
     create_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(blank=True, null=True, upload_to='post_pics')
+    # url = models.SlugField(max_length=200, unique=True, blank=True)
 
     def publish(self):
         self.published_date = timezone.now()
@@ -23,6 +25,10 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('Blog_App:post_detail', kwargs={'pk':self.pk})
+
+    def save(self, *args, **kwargs):
+        self.url = slugify(self.title)
+        super(Post, self).save(*args, *kwargs)
 
     def __str__(self):
         return self.title
